@@ -31,23 +31,33 @@ public class HttpServer {
             inputLine = in.readLine();
             System.out.println("tamano "+inputLine.length());
             if(inputLine!="") {
-                System.out.println("Received: " + inputLine);
-                if (inputLine.split(" ")[1].split("\\?")[0].equals("/Consulta")) {
-                    climaService clima = new climaService();
-                    outputLine = clima.getClima(inputLine.split(" ")[1].split("\\?")[1]);
-                }
-                else if (inputLine.split(" ")[1].equals("/Clima")) {
-                    outputLine = "HTTP/1.1 200 OK\r\n"
-                            + "Content-Type: text/html\r\n"
-                            + "\r\n";
-                    String path = "src/main/resources/public/index.html";
-                    BufferedReader reader = new BufferedReader(new FileReader(path));
-                    String line = "";
-                    while ((line = reader.readLine()) != null) {
-                        outputLine += line + "\n";
+                try {
+                    System.out.println("Received: " + inputLine);
+                    if (inputLine.split(" ")[1].split("\\?")[0].equals("/Consulta")) {
+                        climaService clima = new climaService();
+                        outputLine = clima.getClima(inputLine.split(" ")[1].split("\\?")[1]);
+                    } else if (inputLine.split(" ")[1].equals("/Clima")) {
+                        outputLine = "HTTP/1.1 200 OK\r\n"
+                                + "Content-Type: text/html\r\n"
+                                + "\r\n";
+                        String path = "src/main/resources/public/index.html";
+                        BufferedReader reader = new BufferedReader(new FileReader(path));
+                        String line = "";
+                        while ((line = reader.readLine()) != null) {
+                            outputLine += line + "\n";
+                        }
+                    }else{
+                        outputLine = "HTTP/1.1 200 OK\r\n"
+                                + "Content-Type: text/html\r\n"
+                                + "\r\n";
+                        String path = "src/main/resources/public/index.html";
+                        BufferedReader reader = new BufferedReader(new FileReader(path));
+                        String line = "";
+                        while ((line = reader.readLine()) != null) {
+                            outputLine += line + "\n";
+                        }
                     }
-                }
-                else{
+                }catch(Exception e){
                     outputLine = "HTTP/1.1 200 OK\r\n"
                             + "Content-Type: text/html\r\n"
                             + "\r\n";

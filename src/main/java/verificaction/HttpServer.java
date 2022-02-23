@@ -29,7 +29,6 @@ public class HttpServer {
                             clientSocket.getInputStream()));
             String inputLine, outputLine = null;
             inputLine = in.readLine();
-            System.out.println("tamano "+inputLine.length());
             if(inputLine!="") {
                 try {
                     System.out.println("Received: " + inputLine);
